@@ -180,7 +180,7 @@ GROUP BY Name HAVING COUNT(*) > 1;
 --17. List incidents with no suspects involved.
 SELECT C.* FROM Crime C
 LEFT JOIN Suspect S ON C.CrimeID = S.CrimeID
-WHERE S.Name='Unknown';
+WHERE S.Name IS NULL;
 
 --18 List all cases where at least one incident is of type 'Homicide' and all other incidents are of type 'Robbery'.
 
