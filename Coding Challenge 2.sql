@@ -153,9 +153,11 @@ HAVING COUNT(*) > 1;
 
 --13 List all incidents with suspects whose names also appear as victims in other incidents.
 
-SELECT * FROM Crime WHERE CrimeID IN (
-    SELECT CrimeID FROM Suspect WHERE Name IN (SELECT Name FROM Victim)
-);
+SELECT C.CrimeID,C.IncidentType,C.IncidentDate,S.Name  
+FROM Crime C
+FULL JOIN Victim V ON V.CrimeID = C.CrimeID
+FULL JOIN Suspect S ON S.CrimeID = C.CrimeID
+where S.Name in(select Name from Victim);
 
 --14 Retrieve all incidents along with victim and suspect details.
 
@@ -184,7 +186,7 @@ WHERE S.Name='Unknown';
 
 SELECT C.*
 FROM Crime C
-WHERE IncidentType in ('Homicide' ,'Robbery');
+WHERE IncidentType IN('Homicide','Robbery');
 
 --19 Retrieve a list of all incidents and the associated suspects, showing suspects for each incident, or 'No Suspect' if there are none.
 SELECT C.*, ISNULL(S.Name, 'No Suspect') AS SuspectName
