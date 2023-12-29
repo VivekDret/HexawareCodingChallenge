@@ -189,9 +189,10 @@ SELECT * FROM Crime WHERE CrimeID IN (
 );
 
 --19 Retrieve a list of all incidents and the associated suspects, showing suspects for each incident, or 'No Suspect' if there are none.
-SELECT c.CrimeID, c.IncidentType, ISNULL(s.Name, 'No Suspect') AS SuspectName
-FROM Crime c
-LEFT JOIN Suspect s ON c.CrimeID = s.CrimeID;
+SELECT C.*, ISNULL(S.Name, 'No Suspect') AS SuspectName
+FROM Crime C
+LEFT JOIN Suspect S ON C.CrimeID = S.CrimeID AND S.Name <> 'Unknown';
+
 
 --20 List all suspects who have been involved in incidents with incident types 'Robbery' or 'Homicide'.
 
